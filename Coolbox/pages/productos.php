@@ -54,7 +54,7 @@ $result = $conn->query($query);
                             <td><?= "S/ " . number_format($producto['precio'], 2); ?></td>
                             <td>
                                 <!-- Botones de acciones -->
-                                <a href="eliminar_producto.php?id=<?= $producto['id']; ?>" class="btn btn-danger btn-sm">
+                                <a href="../controllers/eliminar_producto_backend.php?id=<?= $producto['id']; ?>" class="btn btn-danger btn-sm">
                                     <i class="bi bi-trash"></i> Eliminar
                                 </a>
                                 <!-- Botón "Editar" -->
@@ -64,6 +64,10 @@ $result = $conn->query($query);
                                         data-cantidad="<?= $producto['cantidad']; ?>" data-imagen="<?= $producto['imagen']; ?>" >
                                     <i class="bi bi-pencil-square"></i> Editar
                                 </button>
+                                <!-- Botón "Ver Más" -->
+                                <a href="producto_detalles.php?id=<?= $producto['id']; ?>" class="btn btn-info btn-sm">
+                                    <i class="bi bi-info-circle"></i> Ver Más
+                                </a>
                             </td>
                         </tr>
                     <?php } ?>
@@ -173,6 +177,16 @@ $result = $conn->query($query);
                             <input type="number" class="form-control" id="producto-cantidad" name="cantidad" required>
                         </div>
 
+
+                        <div class="mb-3">
+                            <label for="categoria_id" class="form-label">Categoría</label>
+                            <select class="form-control" id="categoria_id" name="categoria_id" required>
+                                <option value="1">Electrónica</option>
+                                <option value="2">Accesorios</option>
+                                <option value="3">Gaming</option>
+                            </select>
+                        </div>
+
                         <div class="mb-3">
                             <label for="imagen" class="form-label">Imagen del Producto</label>
                             <input type="file" class="form-control" id="producto-imagen" name="imagen">
@@ -199,6 +213,7 @@ $result = $conn->query($query);
             const descripcion = button.getAttribute('data-descripcion');
             const precio = button.getAttribute('data-precio');
             const cantidad = button.getAttribute('data-cantidad');
+            const categoriaId = button.getAttribute('data-categoria-id');
             const imagen = button.getAttribute('data-imagen');
 
             const modal = editarProductoModal.querySelector('form');
@@ -207,6 +222,7 @@ $result = $conn->query($query);
             modal.querySelector('#producto-descripcion').value = descripcion;
             modal.querySelector('#producto-precio').value = precio;
             modal.querySelector('#producto-cantidad').value = cantidad;
+            modal.querySelector('#categoria_id').value = categoriaId;
             modal.querySelector('#producto-imagen').value = imagen;
         });
     </script>

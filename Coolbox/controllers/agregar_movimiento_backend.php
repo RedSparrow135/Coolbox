@@ -3,16 +3,6 @@
 
 include('../config/db_connection.php');
 
-// Iniciar la sesión
-session_start();
-
-// Verificar si el usuario está logueado
-if (!isset($_SESSION['usuario_id'])) {
-    // Si no está logueado, redirigir al login
-    header("Location: login.php");
-    exit();
-}
-
 // Verificar si el formulario fue enviado
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = mysqli_real_escape_string($conn, $_POST['id']);
@@ -22,14 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cantidad = mysqli_real_escape_string($conn, $_POST['cantidad']);
     $categoria_id = mysqli_real_escape_string($conn, $_POST['categoria_id']);
     $imagen = $_FILES['imagen']['name'];
-
-    // Validar que el categoria_id exista en la tabla 'categorias'
-    $sql_check_categoria = "SELECT id FROM categorias WHERE id = '$categoria_id'";
-    $result_categoria = $conn->query($sql_check_categoria);
-    if ($result_categoria->num_rows == 0) {
-        echo "Error: La categoría seleccionada no existe.";
-        exit();
-    }
 
     // Subir la nueva imagen del producto (si se ha subido una)
     if ($imagen != '') {
